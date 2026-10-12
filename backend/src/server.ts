@@ -1,9 +1,11 @@
 import express from "express";
 import userRoutes from "./routes/userRoutes";
+import jobRoutes from "./routes/jobRoutes";
 
 const app = express();
 
 app.use(express.json());
+app.use("/jobs", jobRoutes);
 
 app.get("/", (_req, res) => {
   res.json({
