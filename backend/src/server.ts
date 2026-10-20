@@ -1,6 +1,8 @@
 import express from "express";
 import userRoutes from "./routes/userRoutes";
 import jobRoutes from "./routes/jobRoutes";
+import dashboardRoutes from "./routes/dashboardRoutes";
+app.use("/dashboard", dashboardRoutes);
 
 const app = express();
 

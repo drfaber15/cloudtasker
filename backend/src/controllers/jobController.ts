@@ -31,3 +31,17 @@ export async function getJobsHandler(
 
   res.json(jobs);
 }
+import { updateJobStatus } from "../services/jobService";
+
+export async function updateJobStatusHandler(
+  req: any,
+  res: Response
+) {
+  const job = await updateJobStatus(
+    req.params.id,
+    req.body.status,
+    req.userId
+  );
+
+  res.json(job);
+}
