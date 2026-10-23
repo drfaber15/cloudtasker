@@ -1,21 +1,21 @@
 import express from "express";
 import userRoutes from "./routes/userRoutes";
 import jobRoutes from "./routes/jobRoutes";
-import dashboardRoutes from "./routes/dashboardRoutes";
-app.use("/dashboard", dashboardRoutes);
+import dashboardRoutes from "./routes/dashboardRoute";
 
 const app = express();
 
 app.use(express.json());
+
+app.use("/users", userRoutes);
 app.use("/jobs", jobRoutes);
+app.use("/dashboard", dashboardRoutes);
 
 app.get("/", (_req, res) => {
   res.json({
     message: "Welcome to CloudTasker API",
   });
 });
-
-app.use("/users", userRoutes);
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");
