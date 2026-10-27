@@ -7,23 +7,54 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  CLIENT
+  FREELANCER
+  ADMIN
+}
+
 model User {
-  id       String @id @default(uuid())
-  email    String @unique
+  id       String   @id @default(uuid())
+  email    String   @unique
   password String
 
-  jobs Job[]
+  role     UserRole @default(FREELANCER)
+
+  jobs       Job[]
+  proposals  Proposal[]
 }
 
 model Job {
   id          String   @id @default(uuid())
   title       String
   description String?
-  status      String   @default("PENDING")
+
+  status      String   @default("OPEN")
+
+  budget      Float?
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  userId String
-  user   User @relation(fields: [userId], references: [id])
+  userId      String
+  user        User @relation(fields: [userId], references: [id])
+
+  proposals   Proposal[]
+}
+
+model Proposal {
+  id           String   @id @default(uuid())
+
+  amount       Float
+  coverLetter  String
+
+  status       String   @default("PENDING")
+
+  createdAt    DateTime @default(now())
+
+  jobId        String
+  freelancerId String
+
+  job          Job  @relation(fields: [jobId], references: [id])
+  freelancer   User @relation(fields: [freelancerId], references: [id])
 }
