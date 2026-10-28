@@ -27,4 +27,4 @@ export const getJobProposals = async (
       freelancer: true,
     },
   });
-};
+};npm run dev
