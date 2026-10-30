@@ -1,4 +1,4 @@
-import prisma from "../config/prisma";
+import { prisma } from "../config/prisma";
 
 export const createProposal = async (
   jobId: string,
@@ -27,4 +27,4 @@ export const getJobProposals = async (
       freelancer: true,
     },
   });
-};npm run dev
+};

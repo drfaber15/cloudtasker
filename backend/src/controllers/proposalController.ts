@@ -4,19 +4,24 @@ import * as proposalService from "../services/proposalService";
 export const createProposal = async (
   req: Request,
   res: Response
-) => {
+): Promise<void> => {
   try {
     const { amount, coverLetter } = req.body;
 
+    const jobId = String(req.params.jobId);
+    const freelancerId = (req as any).user?.id;
+
     const proposal = await proposalService.createProposal(
-      req.params.jobId,
-      (req as any).user.id,
+      jobId,
+      freelancerId,
       amount,
       coverLetter
     );
 
     res.status(201).json(proposal);
   } catch (error) {
+    console.error(error);
+
     res.status(500).json({
       message: "Failed to create proposal",
     });
@@ -26,14 +31,18 @@ export const createProposal = async (
 export const getJobProposals = async (
   req: Request,
   res: Response
-) => {
+): Promise<void> => {
   try {
+    const jobId = String(req.params.jobId);
+
     const proposals = await proposalService.getJobProposals(
-      req.params.jobId
+      jobId
     );
 
-    res.json(proposals);
+    res.status(200).json(proposals);
   } catch (error) {
+    console.error(error);
+
     res.status(500).json({
       message: "Failed to fetch proposals",
     });
